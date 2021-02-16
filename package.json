@@ -5,7 +5,9 @@
   "repository": "https://github.com/nlnadialigia/calculator-js.git",
   "author": "Nadia Ligia <nlnadialigia@gmail.com>",
   "license": "MIT",
-  "lint": "eslint . --fix",
+  "scripts": {
+    "lint": "eslint . --fix"
+  },
   "devDependencies": {
     "eslint": "^7.20.0",
     "eslint-config-standard": "^16.0.2",
