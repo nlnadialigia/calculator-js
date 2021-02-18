@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
 class CalcController {
-  constructor() {
+  constructor(){
     this._locale = 'pt-BR';
     this._displayCalcEl = document.querySelector('#display');
     this._dateEl = document.querySelector('#data');
@@ -11,7 +11,7 @@ class CalcController {
     this.initialize();
   }
 
-  initialize() {
+  initialize(){
     this.setDisplayDateTime();
 
     setInterval(() => {
@@ -19,7 +19,11 @@ class CalcController {
     }, 1000);
   }
 
-  setDisplayDateTime() {
+  initButtonsEvents(){
+    const buttons = document.querySelectorAll('#buttons > g, #parts > g');
+  }
+
+  setDisplayDateTime(){
     this.displayDate = this.currentDate.toLocaleDateString(this._locale, {
       day: '2-digit',
       month: 'long',
@@ -28,35 +32,35 @@ class CalcController {
     this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
   }
 
-  get displayCalc() {
+  get displayCalc(){
     return this._displayCalcEl.innerHTML;
   }
 
-  set displayCalc(value) {
+  set displayCalc(value){
     this._displayCalcEl.innerHTML = value;
   }
 
-  get displayTime() {
+  get displayTime(){
     return this._timeEl.innerHTML;
   }
 
-  set displayTime(value) {
+  set displayTime(value){
     this._timeEl.innerHTML = value;
   }
 
-  get displayDate() {
+  get displayDate(){
     return this._dateEl.innerHTML;
   }
 
-  set displayDate(value) {
+  set displayDate(value){
     this._dateEl.innerHTML = value;
   }
 
-  get currentDate() {
+  get currentDate(){
     return new Date();
   }
 
-  set currentDate(value) {
+  set currentDate(value){
     this.currentDate = value;
   }
 }
