@@ -49,7 +49,7 @@ class CalcController {
     return sinal.indexOf(value) > -1;
   }
 
-  pushOperator(value){
+  pushOperation(value){
     this._operation.push(value);
     if (this._operation.length > 3) {
       this.calc();
@@ -61,15 +61,23 @@ class CalcController {
     const result = eval(this._operation.join(''));
     this._operation = [result, last];
     console.log(this._operation);
+    this.setLastNumberToDisplay();
   }
 
   setLastNumberToDisplay(){
+    let lastNumber;
 
+    for (let i = this._operation.length - 1; i >= 0; i--){
+      if (!this.isOperator(this._operation[i])) {
+        lastNumber = this._operation[i];
+        break;
+      }
+    }
+
+    this.displayCalc = lastNumber;
   }
 
   addOperation(value){
-    console.log('A', value, isNaN(this.getLastOperation()));
-
     if (isNaN(this.getLastOperation())) {
       // string
       if (this.isOperator(value)) {
@@ -79,12 +87,13 @@ class CalcController {
         // outra coisa
         console.log('OUTRA COISA');
       } else {
-        this._operation.push(value);
+        this.pushOperation(value);
+        this.setLastNumberToDisplay();
       }
     } else {
       // number
       if (this.isOperator(value)) {
-        this._operation.push(value);
+        this.pushOperation(value);
       } else {
         const newValue = this.getLastOperation().toString() + value.toString();
         this.setLastOperation(parseInt(newValue));
@@ -151,7 +160,7 @@ class CalcController {
 
     buttons.forEach((btn, index) => {
       this.addEventListenerAll(btn, 'click drag', e => {
-        console.log(btn.className.baseVal.replace('btn-', ''));
+        // console.log(btn.className.baseVal.replace('btn-', ''));
         const textBtn = btn.className.baseVal.replace('btn-', '');
 
         this.execBtn(textBtn);
