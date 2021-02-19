@@ -1,3 +1,4 @@
+/* eslint-disable no-eval */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
 class CalcController {
@@ -48,7 +49,27 @@ class CalcController {
     return sinal.indexOf(value) > -1;
   }
 
+  pushOperator(value){
+    this._operation.push(value);
+    if (this._operation.length > 3) {
+      this.calc();
+    }
+  }
+
+  calc(){
+    const last = this._operation.pop();
+    const result = eval(this._operation.join(''));
+    this._operation = [result, last];
+    console.log(this._operation);
+  }
+
+  setLastNumberToDisplay(){
+
+  }
+
   addOperation(value){
+    console.log('A', value, isNaN(this.getLastOperation()));
+
     if (isNaN(this.getLastOperation())) {
       // string
       if (this.isOperator(value)) {
@@ -56,16 +77,22 @@ class CalcController {
         this.setLastOperation(value);
       } else if (isNaN(value)) {
         // outra coisa
+        console.log('OUTRA COISA');
       } else {
         this._operation.push(value);
       }
     } else {
       // number
-      const newValue = this.getLastOperation().toString() + value.toString();
-      this.setLastOperation(parseInt(newValue));
-    }
+      if (this.isOperator(value)) {
+        this._operation.push(value);
+      } else {
+        const newValue = this.getLastOperation().toString() + value.toString();
+        this.setLastOperation(parseInt(newValue));
 
-    console.log(this._operation);
+        // atualizar display
+        this.setLastNumberToDisplay();
+      }
+    }
   }
 
   setError(){
